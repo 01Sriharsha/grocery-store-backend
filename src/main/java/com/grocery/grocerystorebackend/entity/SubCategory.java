@@ -6,12 +6,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class Customer {
+public class SubCategory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,16 +22,11 @@ public class Customer {
 
     private String name;
 
-    private String phone;
+    private String description;
 
-    @Column(unique = true)
-    private String email;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Category category;
 
-    private String password;
-
-    private String city;
-
-    private String address;
-
-    private String user;
+    @OneToMany(fetch = FetchType.LAZY , cascade = CascadeType.ALL , mappedBy = "subCategory")
+    private List<Product> products = new ArrayList<>();
 }

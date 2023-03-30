@@ -24,6 +24,10 @@ public class CustomerService {
     }
 
     public Customer createCustomer(Customer customer){
+        if(customerRepository.existsByEmail(customer.getEmail())){
+            throw new RuntimeException("Provided email already exists!!");
+        }
+        customer.setUser("customer");
         return customerRepository.save(customer);
     }
 

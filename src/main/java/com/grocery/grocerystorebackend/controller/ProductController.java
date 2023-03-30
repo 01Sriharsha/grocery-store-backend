@@ -1,0 +1,48 @@
+package com.grocery.grocerystorebackend.controller;
+
+import com.grocery.grocerystorebackend.entity.Product;
+import com.grocery.grocerystorebackend.service.ProductService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@CrossOrigin("http://localhost:3000")
+@RequestMapping("/api/v1")
+public class ProductController {
+
+    @Autowired
+    private ProductService productService;
+
+    @GetMapping("/products")
+    public ResponseEntity<?> retrieveAllProducts(){
+        return new ResponseEntity<>(productService.getAllProducts() , HttpStatus.OK);
+    }
+
+    @GetMapping("/products/{productId}")
+    public ResponseEntity<?> retrieveSingleProduct(String productId){
+        return new ResponseEntity<>(productService.getSingleProduct(productId) , HttpStatus.OK);
+    }
+
+    @PostMapping("/category/{categoryId}/subcategory/{subcategoryId}/products")
+    public ResponseEntity<?> createNewProduct(
+            @PathVariable Integer categoryId,
+            @PathVariable Integer subcategoryId,
+            @RequestBody Product product
+    ){
+        return new ResponseEntity<>(productService.createProduct(categoryId , subcategoryId , product) , HttpStatus.CREATED);
+    }
+
+    @PutMapping("/products/{productId}")
+    public ResponseEntity<?> updateProduct(@PathVariable String productId,@RequestBody Product product){
+        return new ResponseEntity<>(productService.updateProduct(productId , product) , HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/products/{productId}")
+    public ResponseEntity<?> deleteProduct(@PathVariable String productId){
+        productService.deleteProduct(productId);
+        return new ResponseEntity<>("Product removed successfully!!" , HttpStatus.OK);
+    }
+
+}
