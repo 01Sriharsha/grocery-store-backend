@@ -29,6 +29,14 @@ public class CategoryService {
         return categoryRepository.save(category);
     }
 
+    public Category updateCategory(Integer categoryId , Category category){
+        var existingCategory = categoryRepository.findById((categoryId))
+                .orElseThrow(()->new RuntimeException("category not found"));
+        existingCategory.setName(category.getName());
+        existingCategory.setDescription(category.getDescription());
+        return categoryRepository.save(existingCategory);
+    }
+
     public void deleteCategory(Integer categoryId){
         var category = categoryRepository.findById((categoryId))
                 .orElseThrow(()->new RuntimeException("category not found"));

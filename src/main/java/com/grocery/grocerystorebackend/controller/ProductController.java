@@ -45,4 +45,16 @@ public class ProductController {
         return new ResponseEntity<>("Product removed successfully!!" , HttpStatus.OK);
     }
 
+    //get all products by category
+    @GetMapping("/categories/{categoryId}/products")
+    public ResponseEntity<?> retrieveAllProductsByCategory(@PathVariable Integer categoryId){
+        return new ResponseEntity<>(productService.getAllProductsByCategory(categoryId) , HttpStatus.OK);
+    }
+
+    //get all products by sub category
+    @GetMapping("/subcategories/{subCategoryId}/products")
+    public ResponseEntity<?> retrieveAllProductsBySubCategory(@PathVariable Integer subCategoryId){
+        return new ResponseEntity<>(productService.getAllProductsBySubCategory(subCategoryId) , HttpStatus.OK);
+    }
+
 }

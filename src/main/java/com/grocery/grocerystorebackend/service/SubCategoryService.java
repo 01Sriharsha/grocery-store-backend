@@ -1,6 +1,7 @@
 package com.grocery.grocerystorebackend.service;
 
 
+import com.grocery.grocerystorebackend.entity.Category;
 import com.grocery.grocerystorebackend.entity.SubCategory;
 import com.grocery.grocerystorebackend.repository.CategoryRepository;
 import com.grocery.grocerystorebackend.repository.SubCategoryRepository;
@@ -40,6 +41,14 @@ public class SubCategoryService {
                 .orElseThrow(()->new RuntimeException("category not found"));
         subCategory.setCategory(category);
         return subCategoryRepository.save(subCategory);
+    }
+
+    public SubCategory updateSubCategory(Integer subCategoryId , SubCategory subCategory){
+        var existingSubCategory = subCategoryRepository.findById((subCategoryId))
+                .orElseThrow(()->new RuntimeException("Sub Category not found"));
+        existingSubCategory.setName(subCategory.getName());
+        existingSubCategory.setDescription(subCategory.getDescription());
+        return subCategoryRepository.save(existingSubCategory);
     }
 
     public void deleteSubCategory(Integer subCategoryId){
