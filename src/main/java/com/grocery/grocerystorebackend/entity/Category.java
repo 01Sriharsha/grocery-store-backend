@@ -1,6 +1,9 @@
 package com.grocery.grocerystorebackend.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,9 +28,12 @@ public class Category {
 
     private String description;
 
-    @OneToMany(fetch = FetchType.LAZY , cascade = CascadeType.ALL , mappedBy = "category")
-    private List<SubCategory> subCategories  = new ArrayList<>();
+    //    @JsonManagedReference
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "category")
+    private List<SubCategory> subCategories = new ArrayList<>();
 
-    @OneToMany(fetch = FetchType.LAZY , cascade = CascadeType.ALL , mappedBy = "category")
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "category")
     private List<Product> products = new ArrayList<>();
 }
