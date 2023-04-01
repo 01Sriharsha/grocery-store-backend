@@ -25,7 +25,7 @@ public class ProductController {
         return new ResponseEntity<>(productService.getSingleProduct(productId) , HttpStatus.OK);
     }
 
-    @PostMapping("/category/{categoryId}/subcategory/{subcategoryId}/products")
+    @PostMapping("/categories/{categoryId}/subcategories/{subcategoryId}/products")
     public ResponseEntity<?> createNewProduct(
             @PathVariable Integer categoryId,
             @PathVariable Integer subcategoryId,

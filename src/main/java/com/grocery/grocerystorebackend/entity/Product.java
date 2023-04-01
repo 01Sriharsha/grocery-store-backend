@@ -1,13 +1,14 @@
 package com.grocery.grocerystorebackend.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
@@ -31,6 +32,7 @@ public class Product {
 
     private String brand;
 
+    @Column(length = 5000)
     private String description;
 
     private String discount;
@@ -42,4 +44,8 @@ public class Product {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private SubCategory subCategory;
+
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY , cascade = CascadeType.ALL , mappedBy = "product")
+    private List<Image> images = new ArrayList<>();
 }
