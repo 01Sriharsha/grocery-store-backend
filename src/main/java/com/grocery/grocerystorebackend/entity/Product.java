@@ -1,6 +1,7 @@
 package com.grocery.grocerystorebackend.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -40,12 +41,14 @@ public class Product {
     private String type;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Category category;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private SubCategory subCategory;
 
     @JsonIgnore
-    @OneToMany(fetch = FetchType.LAZY , cascade = CascadeType.ALL , mappedBy = "product")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "product")
     private List<Image> images = new ArrayList<>();
 }

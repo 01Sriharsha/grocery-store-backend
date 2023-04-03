@@ -71,11 +71,11 @@ public class ImageController {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new RuntimeException("Product not found"));
         List<Image> productImages = imageRepository.findByProduct(product);
-        List<UriComponents> imageUriList = productImages.stream().map(image -> {
+        List<String> imageUriList = productImages.stream().map(image -> {
             return ServletUriComponentsBuilder.fromCurrentContextPath()
                     .path("/api/v1/download/images/")
                     .path(String.valueOf(image.getId()))
-                    .build();
+                    .toUriString();
         }).toList();
         return new ResponseEntity<>(imageUriList, HttpStatus.OK);
     }
