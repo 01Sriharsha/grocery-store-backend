@@ -31,12 +31,14 @@ public class ProductController {
             @PathVariable Integer subcategoryId,
             @RequestBody Product product
     ){
-        return new ResponseEntity<>(productService.createProduct(categoryId , subcategoryId , product) , HttpStatus.CREATED);
+        productService.createProduct(categoryId , subcategoryId , product);
+        return new ResponseEntity<>("Product added successfully!!", HttpStatus.CREATED);
     }
 
     @PutMapping("/products/{productId}")
     public ResponseEntity<?> updateProduct(@PathVariable String productId,@RequestBody Product product){
-        return new ResponseEntity<>(productService.updateProduct(productId , product) , HttpStatus.CREATED);
+        productService.updateProduct(productId , product);
+        return new ResponseEntity<>("Product updated successfully!!" , HttpStatus.CREATED);
     }
 
     @DeleteMapping("/products/{productId}")
