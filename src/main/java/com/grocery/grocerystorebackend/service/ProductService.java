@@ -48,7 +48,8 @@ public class ProductService {
         var existingProduct = productRepository.findById((productId))
                 .orElseThrow(()->new RuntimeException("Product not found"));
         existingProduct.setName(product.getName());
-        existingProduct.setPrice(product.getPrice());
+        existingProduct.setPricePerKg(product.getPricePerKg());
+        existingProduct.setPricePerPiece(product.getPricePerPiece());
         existingProduct.setQuantity(product.getQuantity());
         existingProduct.setBrand(product.getBrand());
         existingProduct.setMfdDate(product.getMfdDate());

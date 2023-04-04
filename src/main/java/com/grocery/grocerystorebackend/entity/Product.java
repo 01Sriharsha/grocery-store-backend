@@ -29,7 +29,9 @@ public class Product {
 
     private String expDate;
 
-    private String price;
+    private String pricePerKg;
+
+    private String pricePerPiece;
 
     private String brand;
 

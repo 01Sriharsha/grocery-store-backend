@@ -31,8 +31,8 @@ public class ProductController {
             @PathVariable Integer subcategoryId,
             @RequestBody Product product
     ){
-        productService.createProduct(categoryId , subcategoryId , product);
-        return new ResponseEntity<>("Product added successfully!!", HttpStatus.CREATED);
+        var savedProduct = productService.createProduct(categoryId , subcategoryId , product);
+        return new ResponseEntity<>(savedProduct.getId(), HttpStatus.CREATED);
     }
 
     @PutMapping("/products/{productId}")
