@@ -3,10 +3,7 @@ package com.grocery.grocerystorebackend.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,12 +19,12 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private String itemCount;
+    private String quantity;
 
-    @OneToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Customer customer;
 
-    @OneToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Product product;
 
 }
