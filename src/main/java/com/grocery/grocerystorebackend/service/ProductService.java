@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Stream;
 
 @Service
 public class ProductService {
@@ -50,7 +51,7 @@ public class ProductService {
         existingProduct.setName(product.getName());
         existingProduct.setPricePerKg(product.getPricePerKg());
         existingProduct.setPricePerPiece(product.getPricePerPiece());
-        existingProduct.setQuantity(product.getQuantity());
+        existingProduct.setTotalQuantity(product.getTotalQuantity());
         existingProduct.setBrand(product.getBrand());
         existingProduct.setMfdDate(product.getMfdDate());
         existingProduct.setExpDate(product.getExpDate());

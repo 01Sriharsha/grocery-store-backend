@@ -23,7 +23,7 @@ public class Product {
 
     private String name;
 
-    private String quantity;
+    private String totalQuantity;
 
     private String mfdDate;
 
@@ -53,4 +53,5 @@ public class Product {
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "product")
     private List<Image> images = new ArrayList<>();
+
 }
