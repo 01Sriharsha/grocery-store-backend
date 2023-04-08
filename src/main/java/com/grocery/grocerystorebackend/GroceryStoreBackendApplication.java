@@ -22,7 +22,5 @@ public class GroceryStoreBackendApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
-		Cart cart = cartRepository.findByCustomerIdAndProductId(1, "4847FE33").get();
-		System.out.println(cart);
 	}
 }

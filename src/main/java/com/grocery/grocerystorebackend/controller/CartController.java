@@ -23,32 +23,20 @@ public class CartController {
 
     @PostMapping("/customers/{customerId}/products/{productId}/cart")
     public ResponseEntity<?> createOrUpdateCartItems(
-            @RequestBody Cart cart,
             @PathVariable Integer customerId,
             @PathVariable String productId
     ) {
-        return new ResponseEntity<>(cartService.createOrUpdateCart(customerId, productId, cart), HttpStatus.CREATED);
+        return new ResponseEntity<>(cartService.createOrUpdateCart(customerId, productId), HttpStatus.CREATED);
     }
 
     @GetMapping("/customers/{customerId}/cart")
     public ResponseEntity<?> getAllCartItemsByCustomerId(@PathVariable Integer customerId) {
-        List<Cart> cartItems = cartService.getCartsByCustomerId(customerId);
-        Stream<CartDto> cartDtoStream = cartItems.stream().map(CartController::mapToDto);
-        return new ResponseEntity<>(cartDtoStream, HttpStatus.OK);
-    }
-
-    private static CartDto mapToDto(Cart item) {
-        return new CartDto(
-                item.getId(),
-                item.getQuantity(),
-                item.getProduct().getId(),
-                item.getProduct().getName(),
-                item.getCustomer().getId()
-        );
+        List<CartDto> cartItems = cartService.getCartsByCustomerId(customerId);
+        return new ResponseEntity<>(cartItems, HttpStatus.OK);
     }
 
     @GetMapping("/customers/{customerId}/products/{productId}/cart")
-    public ResponseEntity<?> getAllCartItemsProductId(
+    public ResponseEntity<?> getAllCartItemsByProductId(
             @PathVariable Integer customerId,
             @PathVariable String productId
     ) {
@@ -57,6 +45,18 @@ public class CartController {
         else {
             return new ResponseEntity<>(optionalCart.get(), HttpStatus.OK);
         }
+    }
+
+    @PutMapping("/cart/{cartId}/decrement")
+    public ResponseEntity<?> decrementCartQuantity(@PathVariable Integer cartId){
+        cartService.decrementCartQuantity(cartId);
+        return new ResponseEntity<>("Cart Item decremented!!" , HttpStatus.OK);
+    }
+
+    @DeleteMapping("/customers/{customerId}/cart")
+    public ResponseEntity<?> deleteAllCartItemsByCustomerId(@PathVariable Integer customerId) {
+        cartService.deleteAllCartItemsByCustomerId(customerId);
+        return new ResponseEntity<>("Cart Items cleared successfully!!", HttpStatus.OK);
     }
 
     @DeleteMapping("/cart/{cartItemId}")

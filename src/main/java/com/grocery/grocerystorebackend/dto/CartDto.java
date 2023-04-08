@@ -11,13 +11,17 @@ import lombok.Setter;
 @Setter
 public class CartDto {
 
-    private Integer id;
+    private Integer cartId;
 
-    private String quantity;
+    private Long quantity;
 
-    private String productId;
+    private String id;
 
-    private String productName;
+    private String name;
+
+    private String price;
+
+    private String brand;
     
     private Integer customerId;
 }

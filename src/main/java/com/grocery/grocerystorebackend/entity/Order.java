@@ -1,9 +1,11 @@
 package com.grocery.grocerystorebackend.entity;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,18 +15,12 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-public class Cart {
+public class Order {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private String id;
 
-    private Long quantity = 0L;
-
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties({"hibernateLazyInitializer" , "handler"})
     private Customer customer;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    private Product product;
-
 }
