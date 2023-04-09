@@ -23,7 +23,7 @@ public class ProductController {
     }
 
     @GetMapping("/products/{productId}")
-    public ResponseEntity<?> retrieveSingleProduct(String productId){
+    public ResponseEntity<?> retrieveSingleProduct(@PathVariable String productId){
         return new ResponseEntity<>(productService.getSingleProduct(productId) , HttpStatus.OK);
     }
 

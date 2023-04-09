@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -37,5 +38,9 @@ public class Customer {
 
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY , cascade = CascadeType.ALL , mappedBy = "customer")
-    private List<Order> orders;
+    private List<Order> orders = new ArrayList<>();
+
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY , cascade = CascadeType.ALL , mappedBy = "customer")
+    private List<Feedback> feedbacks = new ArrayList<>();
 }

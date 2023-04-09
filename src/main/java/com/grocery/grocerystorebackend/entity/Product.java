@@ -54,4 +54,12 @@ public class Product {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "product")
     private List<Image> images = new ArrayList<>();
 
+    @ManyToMany(mappedBy = "products")
+    @JsonIgnore
+    private List<Order> orders;
+
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "product")
+    private List<Feedback> feedbacks = new ArrayList<>();
+
 }
