@@ -30,6 +30,8 @@ public class FeedbackService {
         Product product = productRepository.findById(productId).orElseThrow(() -> new RuntimeException("Product not found"));
         feedback.setId(new Random().nextLong(9999,99999));
         feedback.setDate(LocalDate.now());
+        feedback.setProduct(product);
+        feedback.setCustomer(customer);
         return feedbackRepository.save(feedback);
     }
 
