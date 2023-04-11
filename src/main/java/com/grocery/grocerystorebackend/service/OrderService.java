@@ -101,6 +101,7 @@ public class OrderService {
         orderDto.setCity(order.getCity());
         orderDto.setAddress(order.getAddress());
         orderDto.setCustomerId(order.getCustomer().getId());
+        orderDto.setCustomerName(order.getCustomer().getName());
         orderDto.setQuantity(order.getQuantity());
         orderDto.setPhone(order.getPhone());
 

@@ -39,4 +39,6 @@ public class OrderDto {
     private List<Map<String, Object>> products;
 
     private Integer customerId;
+
+    private String customerName;
 }
