@@ -43,4 +43,8 @@ public class Customer {
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY , cascade = CascadeType.ALL , mappedBy = "customer")
     private List<Feedback> feedbacks = new ArrayList<>();
+
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY , cascade = CascadeType.ALL , mappedBy = "customer")
+    private List<ProductRequest> productRequests = new ArrayList<>();
 }

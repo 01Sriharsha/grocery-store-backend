@@ -8,6 +8,7 @@ import com.grocery.grocerystorebackend.repository.CustomerRepository;
 import com.grocery.grocerystorebackend.repository.OrderRepository;
 import com.grocery.grocerystorebackend.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -34,11 +35,16 @@ public class OrderService {
         order.setDate(LocalDate.now());
         order.setDispatched(false);
         order.setDelivered(false);
-        List<Product> products  = new ArrayList<>();
+        List<Product> products = new ArrayList<>();
         order.getCartDto().forEach(product -> {
             Product productObj = productRepository.findById(product.getId())
                     .orElseThrow(() -> new RuntimeException("Product not found"));
             products.add(productObj);
+            if (product.getQuantity() != null && Long.parseLong(productObj.getTotalQuantity()) > 0) {
+                //calculate remaining quantity from the total quantity of the product
+                long remainingQuantity = Long.parseLong(productObj.getTotalQuantity()) - product.getQuantity();
+                productObj.setTotalQuantity(String.valueOf(remainingQuantity));
+            }
         });
         order.setProducts(products);
         Order savedOrder = orderRepository.save(order);
@@ -46,36 +52,28 @@ public class OrderService {
     }
 
     public List<OrderDto> getAllOrders() {
-        return orderRepository.findAll().stream().map(this::mapToDto).toList();
+        return orderRepository.findAll(Sort.by(Sort.Direction.DESC , "date")).stream().map(this::mapToDto).toList();
     }
 
     public List<OrderDto> getAllOrdersByCustomerId(Integer customerId) {
-        return orderRepository.findByCustomerId(customerId).stream().map(this::mapToDto).toList();
-    }    
+        return orderRepository.findByCustomerId(customerId, Sort.by(Sort.Direction.DESC , "date"))
+                .stream().map(this::mapToDto).toList();
+    }
 
     public List<Product> getAllProductsByOrderId(String orderId) {
         return orderRepository.findProductsByOrderId(orderId);
     }
 
-    public OrderDto updateOrderByAdmin(String orderId , Order order){
+    public OrderDto updateOrderByAdmin(String orderId, Order order) {
         Order existingOrder = orderRepository.findById(orderId).orElseThrow(() -> new RuntimeException("Order not found"));
         existingOrder.setDelivered(order.isDelivered());
         existingOrder.setDispatched(order.isDispatched());
         existingOrder.setCancel(order.getCancel());
-        existingOrder.getCartDto().forEach(product -> {
-            Product productObj = productRepository.findById(product.getId())
-                    .orElseThrow(() -> new RuntimeException("Product not found"));
-            if(order.isDispatched() && product.getQuantity() != null && Long.parseLong(productObj.getTotalQuantity())>0){
-                //calculate remaining quantity from the total quantity of the product
-                long remainingQuantity = Long.parseLong(productObj.getTotalQuantity()) - product.getQuantity();
-                productObj.setTotalQuantity(String.valueOf(remainingQuantity));
-            }
-        });
         Order updatedOrder = orderRepository.save(existingOrder);
         return this.mapToDto(updatedOrder);
     }
 
-    public OrderDto updateOrderByCustomer(String orderId , Order order){
+    public OrderDto updateOrderByCustomer(String orderId, Order order) {
         Order existingOrder = orderRepository.findById(orderId).orElseThrow(() -> new RuntimeException("Order not found"));
         existingOrder.setAddress(order.getAddress());
         existingOrder.setCity(order.getCity());
